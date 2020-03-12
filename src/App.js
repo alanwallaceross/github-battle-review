@@ -5,7 +5,7 @@ import Battle from "./components/Battle";
 function App() {
   return (
     <div>
-      <Battle />
+      <Popular />
     </div>
   );
 }
