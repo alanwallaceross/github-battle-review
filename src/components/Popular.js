@@ -8,6 +8,7 @@ import {
   FaExclamationTriangle
 } from "react-icons/fa";
 import Card from "./Card";
+import Loading from "./Loading";
 
 function RepoList({ repo }) {
   return (
@@ -92,24 +93,17 @@ ReposGrid.propTypes = {
 };
 
 export default class Popular extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedLanguage: "All",
-      repos: {},
-      error: null
-    };
-
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
+  state = {
+    selectedLanguage: "All",
+    repos: {},
+    error: null
+  };
 
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
   }
 
-  updateLanguage(selectedLanguage) {
+  updateLanguage = selectedLanguage => {
     this.setState({
       selectedLanguage,
       error: null
@@ -133,12 +127,12 @@ export default class Popular extends React.Component {
           });
         });
     }
-  }
+  };
 
-  isLoading() {
+  isLoading = () => {
     const { selectedLanguage, repos, error } = this.state;
     return !repos[selectedLanguage] && error === null;
-  }
+  };
 
   render() {
     const { selectedLanguage, repos, error } = this.state;
@@ -149,7 +143,7 @@ export default class Popular extends React.Component {
           onUpdateLanguage={this.updateLanguage}
         />
 
-        {this.isLoading() && <p>LOADING</p>}
+        {this.isLoading() && <Loading text="Fetching repos" />}
 
         {error && <p className="center-text error">{error}</p>}
 
